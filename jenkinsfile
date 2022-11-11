@@ -1,11 +1,12 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-    }
+    job = ['second_job', 'first_pipline_job']
+          for(counter in job) {
+            item = Jenkins.instance.getItemByFullName(counter)
+                for (build in item.builds){        
+            build.delete()
+            item.updateNextBuildNumber(1)
+            }     
+          }
 }
